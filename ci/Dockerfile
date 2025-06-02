@@ -14,6 +14,9 @@ WORKDIR /usr/app
 COPY ../package.json ../package-lock.json ./
 RUN npm ci --omit=dev && npm cache clean --force
 
+# Copy application source code
+COPY . .
+
 COPY ci/docker-entrypoint.sh /usr/local/bin
 COPY ci/startup.sh /
 
