@@ -15,9 +15,11 @@ jobs:
           mkdir -p ./playwright-report
       - name: Set working directory for docker file
         run: |
-          cd ./docker/app
+          pwd
+          cd docker/app
       - name: Build Docker Image and container
         run: |
+          pwd
           docker build -t app .
           docker run -d --name my-app-container -p 3000:3000 app
       - name: Run Playwright tests
