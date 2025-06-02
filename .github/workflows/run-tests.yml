@@ -15,7 +15,7 @@ jobs:
           mkdir -p ./playwright-report
       - name: Build Docker Image and container
         run: |
-          docker build -f docker/app/Dockerfile -t app .
+          docker build -f ci/Dockerfile -t app .
           docker run -d --name my-app-container -p 3000:3000 app
       - name: Run Playwright tests
         run: |

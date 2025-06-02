@@ -14,16 +14,10 @@ WORKDIR /usr/app
 COPY ../package.json ../package-lock.json ./
 RUN npm ci --omit=dev && npm cache clean --force
 
-# Add non-root user
-RUN useradd -ms /bin/bash -U -G users ${DOCKER_USER} && \
-    chown -R ${DOCKER_USER} /usr/app && \
-    chown -R ${DOCKER_USER} /home/${DOCKER_USER} && \
-    ln -s /home/${DOCKER_USER} /home/user
+COPY ci/docker-entrypoint.sh /usr/local/bin
+COPY ci/startup.sh /
 
-COPY ./docker-entrypoint.sh /usr/local/bin
-COPY ./startup.sh /
-
-USER ${DOCKER_USER}
+USER pwuser
 
 ENTRYPOINT [ "/startup.sh" ]
 
