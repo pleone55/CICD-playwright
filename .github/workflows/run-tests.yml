@@ -16,7 +16,8 @@ jobs:
       - name: Set working directory for docker file
         run: |
           pwd
-          cd docker/app
+          ls -la
+          cd /docker/app
       - name: Build Docker Image and container
         run: |
           pwd
