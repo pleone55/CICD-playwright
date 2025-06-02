@@ -1,0 +1,22 @@
+#!/bin/bash
+
+if [ -f "./dockerenv" ]; then
+    (/usr/bin/npm "$@")
+    exit
+fi
+
+if [ -z "$PROJECT_NAME" ]; then
+    PROJECT_NAME="app"
+fi
+
+if [ -t 1 ]; then
+    DOCKER_OPTIONS="-it"
+else
+    DOCKER_OPTIONS=""
+fi
+
+if [ "$1" == "bash" ]; then
+    docker exec ${DOCKER_OPTIONS} ${PROJECT_NAME} "$@"
+else
+    docker exec ${DOCKER_OPTIONS} ${PROJECT_NAME} npm "$@"
+fi

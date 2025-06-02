@@ -1,0 +1,20 @@
+name: playwright
+
+services:
+  app:
+    container_name: app
+    build:
+      context: .
+      dockerfile: ./docker/app/Dockerfile
+    volumes:
+      - node_modules:/usr/app/node_modules
+      - .:/usr/app
+    networks:
+      - playwright-networks
+    ports:
+      - 3002:3002
+volumes:
+  node_modules:
+networks:
+  playwright-networks:
+    driver: bridge

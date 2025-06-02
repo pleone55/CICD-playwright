@@ -1,0 +1,19 @@
+{
+  "name": "playwright",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@playwright/test": "1.48.2",
+    "@types/expect": "^24.3.2",
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^22.15.29",
+    "playwright-bdd": "^8.2.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
+}
