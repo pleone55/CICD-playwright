@@ -8,7 +8,6 @@ jobs:
   run-tests:
     runs-on: ubuntu-latest
     container:
-      image: build
       build:
         context: .
         dockerfile: docker/app/Dockerfile
