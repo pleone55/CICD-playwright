@@ -13,16 +13,9 @@ jobs:
       - name: Create Playwright Report directory
         run: |
           mkdir -p ./playwright-report
-      - name: Set working directory for docker file
-        run: |
-          pwd
-          ls -la
-          cd docker/app
-          pwd
-          ls -la
       - name: Build Docker Image and container
         run: |
-          pwd
+          cd docker/app
           ls -la
           docker build -t app .
           docker run -d --name my-app-container -p 3000:3000 app
