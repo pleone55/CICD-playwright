@@ -20,8 +20,8 @@ RUN useradd -ms /bin/bash -U -G users ${DOCKER_USER} && \
     chown -R ${DOCKER_USER} /home/${DOCKER_USER} && \
     ln -s /home/${DOCKER_USER} /home/user
 
-COPY ./docker/app/docker-entrypoint.sh /usr/local/bin
-COPY ./docker/app/startup.sh /
+COPY docker/app/docker-entrypoint.sh /usr/local/bin
+COPY docker/app/startup.sh /
 
 USER ${DOCKER_USER}
 
