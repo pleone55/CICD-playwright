@@ -10,9 +10,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Create Playwright Report directory
-        run: |
-          mkdir -p ./playwright-report
+      # - name: Create Playwright Report directory
+      #   run: |
+      #     mkdir -p ./playwright-report
       - name: Build Docker Image and container
         run: |
           docker build -f ci/Dockerfile -t app .
@@ -22,11 +22,15 @@ jobs:
       - name: Run Playwright tests
         run: |
           docker exec my-app-container npx playwright test
+            - name: Copy Playwright report from container
+      - name: Copy Playwright report from container
+        run: |
+          docker cp my-app-container:/usr/app/playwright-report ./playwright-report
       - name: Upload Playwright test report
         uses: actions/upload-artifact@v4
         with:
           name: playwright-report
-          path: ./playwright-report
+          path: playwright-report
       - name: Stop and remove Docker container
         run: |
           docker stop my-app-container
