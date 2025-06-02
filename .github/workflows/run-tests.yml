@@ -22,7 +22,6 @@ jobs:
       - name: Run Playwright tests
         run: |
           docker exec my-app-container npx playwright test
-            - name: Copy Playwright report from container
       - name: Copy Playwright report from container
         run: |
           docker cp my-app-container:/usr/app/playwright-report ./playwright-report
