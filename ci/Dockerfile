@@ -23,9 +23,8 @@ COPY . .
 COPY ci/docker-entrypoint.sh /usr/local/bin
 COPY ci/startup.sh /
 
-# Add non-root user
-RUN useradd -ms /bin/bash -U -G users pwuser && \
-    chown -R pwuser /usr/app
+# Add permissions for the user
+RUN chown -R pwuser /usr/app
 
 USER pwuser
 
