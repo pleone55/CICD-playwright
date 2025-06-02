@@ -16,6 +16,8 @@ jobs:
       - name: Build Docker Image and container
         run: |
           docker build -f ci/Dockerfile -t app .
+      - name: Run Docker container
+        run: |
           docker run -d --name my-app-container -p 3000:3000 app
       - name: Run Playwright tests
         run: |
