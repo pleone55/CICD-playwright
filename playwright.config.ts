@@ -1,6 +1,6 @@
 import { defineConfig } from "@playwright/test";
-// import { defineBddConfig } from "playwright-bdd";
-// import { existsSync } from 'fs';
+import { defineBddConfig } from "playwright-bdd";
+import { existsSync } from 'fs';
 
 // const testDir = defineBddConfig({
 //     steps: ['test/*.ts', 'test/support/*.ts'],
@@ -8,15 +8,15 @@ import { defineConfig } from "@playwright/test";
 //     outputDir: 'features'
 // });
 
-// function isDockerEnv() {
-//     try {
-//         return existsSync('./dockerenv')
-//     } catch (error) {
-//         return false
-//     }
-// }
+function isDockerEnv() {
+    try {
+        return existsSync('./dockerenv')
+    } catch (error) {
+        return false
+    }
+}
 
-// const isDocker = isDockerEnv();
+const isDocker = isDockerEnv();
 
 export default defineConfig({
     timeout: 5000,
