@@ -17,10 +17,13 @@ jobs:
         run: |
           pwd
           ls -la
-          cd /docker/app
+          cd docker/app
+          pwd
+          ls -la
       - name: Build Docker Image and container
         run: |
           pwd
+          ls -la
           docker build -t app .
           docker run -d --name my-app-container -p 3000:3000 app
       - name: Run Playwright tests
