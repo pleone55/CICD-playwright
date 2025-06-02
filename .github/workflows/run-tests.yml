@@ -10,6 +10,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+      - name: Create Playwright Report directory
+        run: |
+          mkdir -p ./playwright-report
       - name: Set working directory for docker file
         run: |
           cd ./docker/app
