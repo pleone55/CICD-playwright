@@ -10,20 +10,23 @@ RUN apt-get update && apt-get install -y \
 # Set working directory
 WORKDIR /usr/app
 
+# Ensure proper permissions for the application directory
+RUN mkdir -p /usr/app/traces && chmod -R 777 /usr/app
+
 # Install dependencies only (no dev dependencies for smaller image)
-COPY package.json package-lock.json ./
+COPY ../package.json ../package-lock.json ./
 RUN npm ci --omit=dev && npm cache clean --force
 
-# Add non-root user
-RUN useradd -ms /bin/bash -U -G users ${DOCKER_USER} && \
-    chown -R ${DOCKER_USER} /usr/app && \
-    chown -R ${DOCKER_USER} /home/${DOCKER_USER} && \
-    ln -s /home/${DOCKER_USER} /home/user
+# Copy application source code
+COPY . .
 
-COPY docker/app/docker-entrypoint.sh /usr/local/bin
-COPY docker/app/startup.sh /
+COPY ci/docker-entrypoint.sh /usr/local/bin
+COPY ci/startup.sh /
 
-USER ${DOCKER_USER}
+# Add permissions for the user
+RUN chown -R pwuser /usr/app
+
+USER pwuser
 
 ENTRYPOINT [ "/startup.sh" ]
 
