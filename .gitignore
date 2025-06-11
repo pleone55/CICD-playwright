@@ -1,0 +1,11 @@
+
+# Playwright
+node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+.devcontainer/
+.github/dependabot.yml
+traces/
+test-results.json

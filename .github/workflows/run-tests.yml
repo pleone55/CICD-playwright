@@ -1,0 +1,70 @@
+name: Playwright Tests
+on:
+  pull_request:
+    branches:
+      - develop
+  workflow_dispatch:
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Build Docker Image and container
+        run: |
+          docker build -f ci/Dockerfile -t app .
+      - name: Run Docker container
+        run: |
+          docker run -d --name my-app-container -p 3000:3000 app
+      - name: Run Playwright tests
+        run: |
+          docker exec my-app-container npx playwright test
+      - name: Copy Playwright report from container
+        run: |
+          docker cp my-app-container:/usr/app/playwright-report ./playwright-report
+      - name: Upload Playwright test report
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report
+      - name: Stop and remove Docker container
+        run: |
+          docker stop my-app-container
+          docker rm my-app-container
+      - name: Remove Docker image
+        run: |
+          docker rmi app
+      - name: Clean up Docker system
+        run: |
+          docker system prune -f
+          docker volume prune -f
+          docker network prune -f
+          docker image prune -f
+      - name: Check Docker system status
+        run: |
+          docker system df
+          docker ps -a
+          docker images
+          docker volume ls
+          docker network ls
+      - name: Check Playwright test results
+        run: |
+          if [ -d "./playwright-report" ]; then
+            echo "Playwright test report exists."
+          else
+            echo "Playwright test report does not exist."
+            exit 1
+          fi
+      - name: Notify if tests failed
+        if: failure()
+        run: |
+          echo "Playwright tests failed. Please check the report for details."
+          exit 1
+      - name: Notify if tests passed
+        if: success()
+        run: |
+          echo "Playwright tests passed successfully."
+          exit 0
+      - name: Final cleanup
+        run: |
+          echo "Done with the workflow. All resources cleaned up."
