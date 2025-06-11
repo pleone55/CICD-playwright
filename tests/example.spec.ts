@@ -16,3 +16,13 @@ test('get started link', async ({ page }) => {
   // Expects page to have a heading with the name of Installation.
   await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
 });
+
+test('screenshot', async ({ page }) => {
+  await page.goto('https://playwright.dev/');
+
+  // Take a screenshot and save it to the 'screenshot.png' file.
+  await page.screenshot({ path: 'screenshot.png' });
+
+  // Expect the screenshot to be created.
+  expect(await page.screenshot()).toBeDefined();
+});
