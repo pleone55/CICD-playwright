@@ -30,7 +30,6 @@ jobs:
           ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
           IMAGE_TAG: latest
         run: |
-          echo "${ECR_REGISTRY}"
           docker pull $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG || echo "Image not found"
       
       - name: Run Playwright tests
