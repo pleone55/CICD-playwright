@@ -52,6 +52,6 @@ export default defineConfig({
     reporter: [
         ['html', { open: 'never' }],
         ['list'],
-        ['json', { outputFile: 'test-results.json' }]
+        ['json', { outputFile: 'test-results.json', open: 'never' }],
     ],
 });
