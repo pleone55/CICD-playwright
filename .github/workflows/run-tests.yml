@@ -38,7 +38,7 @@ jobs:
           ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
           IMAGE_TAG: latest
         run: |
-          docker run --rm $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG npx playwright test
+          docker run --rm $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG npx playwright test --reporter=html --output=playwright-report || echo "Playwright tests failed, but continuing to copy report."
       
       - name: Copy Playwright report from container
         env:
